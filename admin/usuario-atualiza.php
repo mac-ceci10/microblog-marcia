@@ -50,7 +50,7 @@ if(isset($_POST['atualizar'])){
           <option value=""></option>                  
           <option 
           <?php if($usuario['tipo'] == 'editor') echo " selected "?>
-
+          
           value="editor">Editor</option>  
 
           <option	

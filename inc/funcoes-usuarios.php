@@ -73,6 +73,13 @@ function lerUmUsuario(mysqli $conexao, int $id):array {
 
 
 // Função atualizarUsuario: usada em usuario-atualiza.php
+function AtualizarUsuario( 
+    mysqli $conexao, int $id, string $nome, string $email, string $senha, string $tipo):array {
+    $sql = "UPDATE usuarios nome = '$nome', email = '$email', senha = '$senha', tipo = '$tipo' WHERE id = $id";
+    $resultado = mysqli_query($conexao, $sql) 
+    or die(mysqli_error($conexao));
+    }
+
 // function atualizarUsuario()
 // fim atualizarUsuario
 

@@ -40,7 +40,6 @@ function lerUsuarios(mysqli $conexao):array {
     }
     return $usuarios;
 }
-
 // fim lerUsuarios
 
 
@@ -52,25 +51,34 @@ function lerUsuarios(mysqli $conexao):array {
 
 
 // Função lerUmUsuario: usada em usuario-atualiza.php
+function lerUmUsuario(mysqli $conexao, int $id):array {
 
+    $sql = "SELECT id, nome, email, tipo, senha FROM usuarios 
+    WHERE id = $id";
+
+    $resultado = mysqli_query($conexao, $sql) 
+    or die(mysqli_error($conexao));
+
+    return mysqli_fetch_assoc($resultado);
+
+}
+
+//pra esta função carregar só irá carregar o ID, carregamento de dados
 // fim lerUmUsuario
 
 
-
 // Função verificaSenha: usada em usuario-atualiza.php
-
 // fim verificaSenha
 
 
 
 // Função atualizarUsuario: usada em usuario-atualiza.php
-
+// function atualizarUsuario()
 // fim atualizarUsuario
 
 
 
 // Função buscarUsuario: usada em login.php
-
 // fim buscarUsuario
 
 

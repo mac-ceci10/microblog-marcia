@@ -6,17 +6,44 @@ require "../inc/cabecalho-admin.php";
 $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $usuario = lerUmUsuario($conexao, $id);
 
-
-
 if(isset($_POST['atualizar'])){
 	$nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 	$tipo = filter_input(INPUT_POST, 'tipo', FILTER_SANITIZE_SPECIAL_CHARS);
-	// $senha = codificaSenha($_POST['senha']);
 
-	lerUmUsuario($conexao, $nome, $email, $senha, $tipo);
-	header("location:usuarios.php");
+  // Lógica para senha
+  // Se o campo da senha estiver vazio, significa que o usuário NÃO mudou a senha;
+  
+  
+      if( empty ($_POST['senha'] )){
+      
+      $senha = $usuario['senha']; // manter a senha do banco
+
+      }else{
+
+      // Caso contrário, escreveu algo ou seja digitou alguma coisa, precisaremos verifica a senha digitada.
+      //função lerUMusuario
+
+      $senha = verificaSenha($_POST['senha'], $usuario['senha']);
+
+      }
+
+
+    //TESTE DE SENHAS 
+    // echo "senha no banco " .$usuario ['senha']; // ESTA está vindo do BD 
+    // echo "<br>";
+    // echo"formulario ".$senha; // ESTA está vindo do formulário
+
+
+
+      atualizarUsuario( $conexao, $id, $nome, $email, $senha, $tipo);
+      header("location:usuarios.php");
+  
 }
+
+
+	// $senha = codificaSenha($_POST['senha']);
+  // tudo isso antes de devolver para o BD
 
 
 ?>

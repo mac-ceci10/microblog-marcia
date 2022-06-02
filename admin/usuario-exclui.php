@@ -4,6 +4,7 @@
 require "../inc/funcoes-usuarios.php";
 require "funcoes-sessao.php";
 verificaAcesso();
+verificaAcessoAdmin();
 
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);

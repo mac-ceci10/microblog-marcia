@@ -45,3 +45,13 @@ function logout(){
         header("location:../login.php?logout");
         die(); // ou exit;
 }
+
+
+//Verifica o Acesso adiministrativo
+function verificaAcessoAdmin(){
+    if($_SESSION['tipo'] != 'admin'){
+        //redirecine para a página não-autorizado
+        header("location:nao-autorizado.php");
+        die(); // ou exit
+    }
+}

@@ -1,6 +1,6 @@
 ﻿# Sobre o Microblog
 
-## Área Pública (localhost/microblog-marcia)
+## Área Pública (localhost/microblog)
 ### Qualquer pessoa acessa:
 
 - index.php: página inicial

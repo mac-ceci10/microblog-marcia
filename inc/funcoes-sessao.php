@@ -1,57 +1,62 @@
 <?php
-
 /* Aqui programaremos futuramente
 os recursos de login/logout e verificação
 de permissão de acesso dos usuários */
 
-// Verificar se já existe uma sessão em funcionamento
-
-if(!isset ($_SESSION)){ // isset - se não existir uma sessão
+/* VERIFICANDO SE NÃO EXISTE UMA SESSÃO EM FUNCIONAMENTO */
+if(!isset($_SESSION)){
     session_start();
 }
 
-        //SESSION - PRECISA ser inicializado - e o PHP é quem vai fazer o START nelas.
-
 
 function verificaAcesso(){
-        // Se não existe uma variável de sessão
-        // essa informação será buscada pelo ID - PERMISSÕES
-
-
-if(!isset ($_SESSION['id'])) {
-        // então significa que ele NÃO está logado, portanto apague qualquer resquício de sessão e force o usuário a ir para o login.php
-        //Se não tem a variável de sessão então não tem logado.
+    /* Se NÃO EXISTE uma variável de sessão relacionada
+    ao id do usuário logado... */
+    if(!isset($_SESSION['id'])){
+        /* então significa que ele NÃO ESTÁ LOGADO, portanto
+        apague qualquer resquício de sessão e force o usuário
+        a ir para o login.php */
         session_destroy();
         header("location:../login.php");
         die();
-
-        }
+    }
 }
 
-        // Usado na página login.php
+/* Usado na página login.php */
 function login(int $id, string $nome, string $email, string $tipo){
-        //Criando variáveis de sessão ao logar
+    /* Criando variáveis de Sessão ao logar */
+    $_SESSION['id'] = $id;
+    $_SESSION['nome'] = $nome;
+    $_SESSION['email'] = $email;
+    $_SESSION['tipo'] = $tipo;
+} 
 
-        $_SESSION['id'] = $id;
-        $_SESSION['nome'] = $nome;
-        $_SESSION['email'] = $email;
-        $_SESSION['tipo'] = $tipo;
-}
-
-        //usados nas páginas administrativas quando clicamos em sair
+/* Usado nas páginas administrativas quando clicamos em Sair */
 function logout(){
-        session_start();
-        session_destroy();
-        header("location:../login.php?logout");
-        die(); // ou exit;
+    session_start();
+    session_destroy();
+    header("location:../login.php?logout");
+    die(); // ou exit;
 }
 
 
-//Verifica o Acesso adiministrativo
 function verificaAcessoAdmin(){
+    /* Se o tipo de usuário logado NÃO FOR admin */
     if($_SESSION['tipo'] != 'admin'){
-        //redirecine para a página não-autorizado
+        // Redirecione para a página nao-autorizado
         header("location:nao-autorizado.php");
         die(); // ou exit
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

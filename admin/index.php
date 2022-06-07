@@ -3,7 +3,7 @@
         
     <article class="jumbotron bg-white shadow">
       <h2 class="display-4">
-      Olá <?= $_SESSION['nome']?>
+      Olá <?=$_SESSION['nome']?>
       </h2>
       <p class="lead">Você está no <b>painel de controle e administração</b> do
   site Microblog e seu <b>nível de acesso</b> é <span class="badge badge-info"> <?=$_SESSION['tipo']?> </span>.
@@ -12,14 +12,9 @@
       <p class="lead">
         <a class="btn btn-primary" href="meu-perfil.php" >Meu perfil</a>
         <a class="btn btn-primary" href="posts.php">Gerenciar Posts</a>
-
-        <?php
-        if ($_SESSION['tipo'] == 'admin') {?>
-
+        <?php if($_SESSION['tipo'] == 'admin'){ ?>
         <a class="btn btn-primary" href="usuarios.php">Gerenciar Usuários</a>
-
-        <?php }?>
-
+        <?php } ?>
       </p>
     </article>
         

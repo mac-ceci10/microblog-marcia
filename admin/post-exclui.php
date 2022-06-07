@@ -1,3 +1,3 @@
-<?
-require "funcoes-sessao.php";
+<?php
+require "../inc/funcoes-sessao.php";
 verificaAcesso();

@@ -19,54 +19,42 @@ if( isset($_GET['acesso_proibido']) ){
   $feedback = "";
 }
 
+// 1) [IF] Se o botão entrar foi acionado
+if( isset($_POST['entrar']) ){
 
+  // 2) [IF/ELSE] Se os campos estão vazios
+  if(empty($_POST['email']) || empty($_POST['senha'])){
+    // Redireciona para login com parametro indicando campos obrigatorios
+    header("location:login.php?campos_obrigatorios");
+  } else {
+    // Caso contrário, pegue o email e a senha digitadas
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $senha = $_POST['senha'];
 
-// 1) [IF] verifica se o botão foi acionado - apenas isto
-if( isset($_POST['email'])) {
+    /* Verificando no banco se existe alguém com o email informado */
+    $usuario = buscarUsuario($conexao, $email);
 
-      // 2) [IF] redireciona para login com parâmetro indicando campos obrigatórios
-      if( empty ($_POST['email']) || empty($_POST['senha'])) {
-        header("location:login.php?campos_obrigatorios");
+    /* 3) [IF/ELSE] Se usuário é diferente de nulo (ou seja, se tem usuario) */
+    if($usuario != null){
 
-      //caso contrário, pegue o email e a senha digitados
-      }else{
-      $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-      $senha = $_POST['senha'];
-        
-      //verifica no banco de dados se existe alguém com o e-mail informado
-      $usuario = buscarUsuario($conexao, $email);
-    
-              // 3) [IF / ELSE Se usuário é diferente de nulo (ou seja, tem usuário)]
-              if($usuario != null){
-
-
-                        // 4) [IF / ELSE  Se as senhas forem iguais]
-                        if(password_verify($senha, $usuario['senha'])){
-                            //id, nome, email, tipo
-
-                        login(
-                          $usuario['id'], $usuario['nome'],
-                          $usuario['email'], $usuario['tipo']
-                        );
-
-                        header("location:admin/index.php");
-                        
-                        }else{
-                          header("location:login.php?senha_incorreta");         
-                        }
-                        //CASO contrário não existe usuário - é do IF 3 
-
-              }else{
-              header("location:login.php?nao_encontrado");
-              }
-
-      }
-
-    //teste
-    // var_dump($usuario);
+      /* 4) [IF/ELSE] Se as senhas forem iguais */
+      if(password_verify($senha, $usuario['senha'])){
+        // Então inicia o login para a área administrativa
+        login(
+          $usuario['id'], $usuario['nome'], 
+          $usuario['email'], $usuario['tipo']
+        );
+        header("location:admin/index.php");
+      } else {
+        // Caso contrário, fique no login e diga que a senha tá errada
+        header("location:login.php?senha_incorreta");
+      }  
+    // Caso contrário, não existe usuário  
+    } else {
+      header("location:login.php?nao_encontrado");
+    }
+  }
 }
-
-
 ?>
 <div class="row">
   <article class="col-12 bg-white rounded shadow my-1 py-4">
@@ -75,7 +63,7 @@ if( isset($_POST['email'])) {
     <form action="" method="post" id="form-login" name="form-login" class="mx-auto w-50" autocomplete="off">
 
       <p class="my-2 alert alert-warning text-center">
-                <?=$feedback?>
+        <?=$feedback?>
       </p>
 
       <div class="form-group">

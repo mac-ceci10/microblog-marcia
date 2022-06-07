@@ -1,9 +1,7 @@
 # Comandos para criação do banco de dados do Microblog
 
-
 ## 1) Criar banco de dados (ajuste para conter seu nome)
-CREATE DATABASE progweb_microblog_marcia CHARACTER SET "utf8mb4";
-
+CREATE DATABASE progweb_microblog_seunome CHARACTER SET "utf8mb4";
 
 ## 2) Criar tabela de usuários
 CREATE TABLE usuarios(
@@ -13,7 +11,6 @@ CREATE TABLE usuarios(
   	senha VARCHAR(255) NOT NULL,
 	tipo ENUM('admin','editor') NOT NULL
 );
-
 
 ## 3) Criar tabela de posts
 CREATE TABLE posts(
@@ -25,7 +22,6 @@ CREATE TABLE posts(
   	imagem VARCHAR(40) NOT NULL, -- aqui guardaremos somente o nome.ext da imagem
   	usuario_id SMALLINT NOT NULL
 );
-
 
 ## 4) Criar chave estrangeira para relacionamento entre as tabelas
 ALTER TABLE posts 

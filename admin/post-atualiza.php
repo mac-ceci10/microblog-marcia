@@ -11,10 +11,8 @@ $idPost = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 // $idUsuarioLogado = $_SESSION['id'];
 // $idtipoUsuarioLogado = $_SESSION['tipo'];
 
-
 // // 3) Chamamos a função passando os parâmetros e pegamos o resltado dela
 // $post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
-
 
 
 // // Pegar os dados de sessão do usuário logado

@@ -82,7 +82,6 @@ function lerUmPost(mysqli $conexao,
 } // fim lerUmPost
 
 
-
 /* Usada em post-atualiza.php */
 
 /* Usada em post-atualiza.php */
@@ -101,7 +100,6 @@ resumo = '$resumo', imagem = '$imagem'
 
 mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
 } // fim atualizarPost
-
 
 
 // function atualizarPost(mysqli $conexao, 
@@ -151,18 +149,23 @@ mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
 
 
-
-
 /* Usada em post-exclui.php */
-function excluirPost(mysqli $conexao, int $id){  
 
-    $sql = "DELETE FROM posts WHERE id = $id";
+function excluirPost(mysqli $conexao, int $idPost, int $idUsuarioLogado, string $tipoUsuarioLogado){  
+
+    if($tipoUsuarioLogado == "admin"){
+
+    $sql = "DELETE FROM posts WHERE id = $idPost";
+
+}else{
+
+    $sql ="DELETE FROM posts WHERE id = $idPost AND usuario_id = $idUsuarioLogado";
+
+}
+
 
 	mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim excluirPost
-
-
-
 
 
 

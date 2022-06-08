@@ -17,6 +17,37 @@ $idtipoUsuarioLogado = $_SESSION['tipo'];
 $post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $idtipoUsuarioLogado);
 
 
+
+
+
+
+if(isset($_POST['atualizar'])){
+  $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
+  $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
+  $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
+
+  // Lógica de Atualização da FOTO
+
+  // Se o campo imagem estiver vazio, significa que o usuário não quer trocar de imagem, ou seja, o sistema irá manter a imagem existente.
+
+  // Caso contrário, pegue a referência da nova imagem e faça o processo de UPLOAD para o servidor, 
+
+  // tudo isto antes de realizar o UPDATE.
+
+  // Somente depois do processo de UPLOAD, chamaremos a função de atualizarPost
+
+  $imagem = 
+
+  header("location:posts.php");
+  
+}
+
+
+
+
+
+
+
 // usuamos aqui o var_dump para ver se a busca do ARRAY de lerUmPost, estava funcionando
 
         // echo "<pre>";

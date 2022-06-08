@@ -146,22 +146,28 @@ mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 //                 }
 
 //     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
-// }// fim atualizarPost
+// }// fim atualizarPo
+
+
 
 
 
 
 /* Usada em post-exclui.php */
-function excluirPost(mysqli $conexao){    
-    $sql = "";
+function excluirPost(mysqli $conexao, int $id){  
+
+    $sql = "DELETE FROM posts WHERE id = $id";
 
 	mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim excluirPost
 
 
 
-/* Funções utilitárias */
 
+
+
+
+/* Funções utilitárias */
 
 /* Usada em post-insere.php e post-atualiza.php */
 function upload(array $arquivo){
@@ -197,12 +203,18 @@ function upload(array $arquivo){
 
 
 
+
+
+
 /* Usada em posts.php e páginas da área pública */
 function formataData(string $data): string { 
     //Pegamos a data informada, transformamos em um texto, e aplicamos em um formato mais legível brasileiro.
     return date("d/m/Y H:i", strtotime($data)); // Y maiúsculo sairá com 4 dígitos.
 
 } // fim formataData
+
+
+
 
 
 
@@ -222,6 +234,8 @@ function lerTodosOsPosts(mysqli $conexao):array {
 
 
 
+
+
 /* Usada em post-detalhe.php */
 function lerDetalhes(mysqli $conexao):array {    
     $sql = "";
@@ -229,6 +243,8 @@ function lerDetalhes(mysqli $conexao):array {
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado); 
 } // fim lerDetalhes
+
+
 
 
 

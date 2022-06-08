@@ -1,6 +1,10 @@
 <?php
 require "conecta.php";
 
+
+
+
+
 /* Usada em post-insere.php */
 function inserirPost(
     mysqli $conexao, string $titulo, string $texto, string $resumo, 
@@ -13,7 +17,6 @@ function inserirPost(
 } // fim inserirPost
 
 
-
 /* Usada em posts.php */
 function lerPosts(
     mysqli $conexao, 
@@ -21,15 +24,20 @@ function lerPosts(
     string $tipoUsuarioLogado):array {
 
     /* Se o tipo de usuário for admin */
+
     if($tipoUsuarioLogado == 'admin'){
+
         // Montamos um SQL que traga todos os posts (de qualquer um)
-        $sql = "SELECT posts.id, posts.titulo, posts.data, 
-        usuarios.nome AS autor FROM posts INNER JOIN usuarios
-        ON posts.usuario_id = usuarios.id ORDER BY data DESC";
+            $sql = "SELECT posts.id, posts.titulo, posts.data, 
+            usuarios.nome AS autor FROM posts INNER JOIN usuarios
+            ON posts.usuario_id = usuarios.id ORDER BY data DESC";
+
     } else {
+
         // Senão, montamos um SQL que traga os posts apenas do editor
-        $sql = "SELECT id, titulo, data FROM posts 
-                WHERE usuario_id = $idUsuarioLogado ORDER BY data DESC";
+            $sql = "SELECT id, titulo, data 
+                    FROM posts 
+                    WHERE usuario_id = $idUsuarioLogado ORDER BY data DESC";
     }
 
     $resultado = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
@@ -42,8 +50,31 @@ function lerPosts(
 
 
 /* Usada em post-atualiza.php */
-function lerUmPost(mysqli $conexao):array {    
-    $sql = "";
+function lerUmPost(mysqli $conexao, 
+
+                    int $idPost, 
+                    int $idUsuarioLogado, 
+                    string $tipoUsuarioLogado):array {    
+
+    /* Se o usuario logado for admin, então pode carregar
+    os dados de qualquer post de qualquer usuário */
+
+    if( $tipoUsuarioLogado == 'admin' ){
+        $sql = "SELECT titulo, texto, resumo, imagem, usuario_id 
+                FROM posts
+                WHERE id = $idPost";
+
+    } else {
+
+    /* Caso contrário, significa que é um usuário editor
+    portanto só poderá carregar os dados dos seus próprios posts. */
+
+        $sql = "SELECT titulo, texto, resumo, imagem, usuario_id 
+                FROM posts
+                WHERE id = $idPost 
+                AND usuario_id = $idUsuarioLogado";
+    }
+
 
 	$resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado); 
@@ -60,6 +91,8 @@ function atualizarPost(mysqli $conexao){
 
 
 
+
+
 /* Usada em post-exclui.php */
 function excluirPost(mysqli $conexao){    
     $sql = "";
@@ -70,6 +103,7 @@ function excluirPost(mysqli $conexao){
 
 
 /* Funções utilitárias */
+
 
 /* Usada em post-insere.php e post-atualiza.php */
 function upload(array $arquivo){

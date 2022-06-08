@@ -45,11 +45,21 @@ $quantidade = count($posts);
             <td> <?=$post['autor']?> </td>
             <?php } ?>
 
+
+            <!-- primeira coisa antes de criar a função atualizar, é colocar o link dinâmico aqui para pegar o ID
+          Este é um pré-requisito -->
+
+
+
             <td class="text-center">
               <a class="btn btn-warning btn-sm" 
               href="post-atualiza.php?id=<?=$post['id']?>">
                   Atualizar
               </a>
+
+
+
+
             </td>
             <td class="text-center">
               <a class="btn btn-danger btn-sm excluir"
@@ -58,7 +68,14 @@ $quantidade = count($posts);
               </a>
             </td>
           </tr>
+
+
 <?php } ?>
+
+
+
+
+
         </tbody>                
       </table>
       

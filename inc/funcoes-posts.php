@@ -163,7 +163,6 @@ function excluirPost(mysqli $conexao, int $idPost, int $idUsuarioLogado, string 
 
 }
 
-
 	mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim excluirPost
 

@@ -1,5 +1,4 @@
 <?php require "../inc/cabecalho-admin.php"; ?> 
-    
         
     <article class="jumbotron bg-white shadow">
       <h2 class="display-4">

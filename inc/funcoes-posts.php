@@ -78,17 +78,75 @@ function lerUmPost(mysqli $conexao,
 
 	$resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado); 
+
 } // fim lerUmPost
 
 
 
 /* Usada em post-atualiza.php */
-function atualizarPost(mysqli $conexao){
-    $sql = "";
 
-    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
+/* Usada em post-atualiza.php */
+
+function atualizarPost(mysqli $conexao, int $idPost, int $idUsuarioLogado, string $tipoUsuarioLogado, string $titulo, string $texto, string $resumo, 
+string $imagem){
+    
+ if( $tipoUsuarioLogado == 'admin' ){
+ $sql = "UPDATE posts SET titulo = '$titulo', texto = '$texto', 
+ resumo = '$resumo', imagem = '$imagem' WHERE id = $idPost";
+} else {
+ $sql = "UPDATE posts SET titulo = '$titulo', texto = '$texto', 
+resumo = '$resumo', imagem = '$imagem' 
+ WHERE id = $idPost AND usuario_id = $idUsuarioLogado";
+}
+
+mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
 } // fim atualizarPost
 
+
+
+// function atualizarPost(mysqli $conexao, 
+
+
+//             int $idPost, 
+//             int $idUsuarioLogado, 
+//             string $tipoUsuarioLogado,
+//             string $titulo, 
+//             string $texto, 
+//             string $resumo,
+
+//             string $imagem) {
+
+
+//                 if( $tipoUsuarioLogado == 'admin') {
+
+//                 $sql = "UPDATE posts SET 
+                
+//                             titulo = '$titulo',    
+//                             texto = '$texto',
+//                             resumo = '$resumo',
+//                             imagem = '$imagem',
+
+//                         WHERE id = $idPost";
+
+
+//                 }else{
+
+
+//                 $sql = "UPDATE posts SET 
+                
+//                             titulo = '$titulo',    
+//                             texto = '$texto',
+//                             resumo = '$resumo',
+//                             imagem = '$imagem',
+                
+//                         WHERE id = $idPost
+//                         AND usuario_id = $idUsuarioLogado";
+
+
+//                 }
+
+//     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
+// }// fim atualizarPost
 
 
 

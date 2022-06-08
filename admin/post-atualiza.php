@@ -7,44 +7,77 @@ require "../inc/funcoes-posts.php";
 $idPost = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 
+// // 2) Pegar os dados de sessão do usuário logado;
+// $idUsuarioLogado = $_SESSION['id'];
+// $idtipoUsuarioLogado = $_SESSION['tipo'];
 
-// 2) Pegar os dados de sessão do usuário logado;
+
+// // 3) Chamamos a função passando os parâmetros e pegamos o resltado dela
+// $post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
+
+
+
+// // Pegar os dados de sessão do usuário logado
 $idUsuarioLogado = $_SESSION['id'];
-$idtipoUsuarioLogado = $_SESSION['tipo'];
+$tipoUsuarioLogado = $_SESSION['tipo'];
 
-
-// 3) Chamamos a função passando os parâmetros e pegamos o resltado dela
-$post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $idtipoUsuarioLogado);
-
-
-
-
-
+// Chamamos a função passando os parâmetros e pegamos o resultado dela
+$post = lerUmPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado);
 
 if(isset($_POST['atualizar'])){
   $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
   $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
   $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
 
-  // Lógica de Atualização da FOTO
+  /* Lógica de atualização da foto */
 
-  // Se o campo imagem estiver vazio, significa que o usuário não quer trocar de imagem, ou seja, o sistema irá manter a imagem existente.
-
-  // Caso contrário, pegue a referência da nova imagem e faça o processo de UPLOAD para o servidor, 
-
-  // tudo isto antes de realizar o UPDATE.
-
-  // Somente depois do processo de UPLOAD, chamaremos a função de atualizarPost
-
-  $imagem = 
+  /* 1) Se o campo imagem estiver vazio, significa que o usuário
+  NÃO QUER trocar de imagem. Ou seja, o sistema vai manter a imagem
+  existente. */
+  if( empty($_FILES['imagem']['name']) ){
+    $imagem = $_POST['imagem-existente'];   
+  } else {
+  /* 2) Senão, pegue a referência (nome e extensão) da nova imagem
+  e faça o processo de upload para o servidor */
+    $imagem = $_FILES['imagem']['name'];
+    upload($_FILES['imagem']);
+  }
+    /*  Somente depois do processo de upload (se necessário), 
+  chamaremos a função de atualizarPost */
+  atualizarPost($conexao, $idPost, $idUsuarioLogado, 
+      $tipoUsuarioLogado, $titulo, $texto, $resumo, $imagem);
 
   header("location:posts.php");
-  
 }
 
 
+// if(isset($_POST['atualizar'])){
+//       $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
+//       $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
+//       $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
+
+//       // Lógica de Atualização da FOTO
+
+//       // 1) Se o campo imagem estiver vazio, significa que o usuário não quer trocar de imagem, ou seja, o sistema irá manter a imagem existente.
+
+//       if( empty($_FILES['imagem']['name'])){
+//         $imagem = $_POST['imagem-existente'];
+
+//       }else{
+//           // 2) Caso contrário, pegue a referência da nova imagem e faça o processo de UPLOAD para o servidor, 
+//           $imagem = $_FILES['imagem']['name'];
+//           upload($_FILES['imagem']);
+//       }
 
 
+//   // 3) tudo isto antes de realizar o UPDATE.
+
+//   // 4) Somente depois do processo de UPLOAD, chamaremos a função de atualizarPost
+
+//   atualizarPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado, $titulo, $texto, $resumo, $imagem);
+//   header("location:posts.php");
+
+// }
 
 
 
@@ -62,7 +95,7 @@ if(isset($_POST['atualizar'])){
   <article class="col-12 bg-white rounded shadow my-1 py-4">
     <h2 class="text-center">Atualizar Post</h2>
 
-    <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
+    <form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
         
       <div class="form-group">
         <label for="titulo">Título:</label>

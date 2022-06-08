@@ -21,9 +21,9 @@ require "../inc/cabecalho-admin.php";
       </div>
       
       <div class="form-group">
-        <label for="resumo">Resumo (máximo de 300 caracteres):</label>
+        <label for="resumo">Resumo (máximo de 500 caracteres):</label>
         <span id="maximo" class="badge badge-success">0</span>
-        <textarea class="form-control" name="resumo" id="resumo" cols="50" rows="3" required maxlength="300"></textarea>
+        <textarea class="form-control" name="resumo" id="resumo" cols="50" rows="3" required maxlength="500"></textarea>
       </div>
       
       <div class="form-group">

@@ -15,8 +15,10 @@ function inserirPost(
 
 
 /* Usada em posts.php */
-function lerPosts(mysqli $conexao, 
-    int $idUsuarioLogado, string $tipoUsuarioLogado):array {
+function lerPosts(
+    mysqli $conexao, 
+    int $idUsuarioLogado, 
+    string $tipoUsuarioLogado):array {
 
     /* Se o tipo de usuário for admin */
     if($tipoUsuarioLogado == 'admin'){
@@ -70,9 +72,14 @@ function excluirPost(mysqli $conexao){
 /* Funções utilitárias */
 
 /* Usada em post-insere.php e post-atualiza.php */
-function upload($arquivo){
+function upload(array $arquivo){
     // Definindo os tipos de imagem aceitos
-    $tiposValidos = ["image/png", "image/jpeg", "image/gif",                       "image/svg+xml"];
+
+    $tiposValidos = [
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/svg+xml"];
 
     // Verificando se o arquivo enviado NÃO É um dos aceitos
     if( !in_array($arquivo['type'], $tiposValidos) ){
@@ -99,8 +106,10 @@ function upload($arquivo){
 
 
 /* Usada em posts.php e páginas da área pública */
-function formataData(){ 
-    
+function formataData(string $data): string { 
+    //Pegamos a data informada, transformamos em um texto, e aplicamos em um formato mais legível brasileiro.
+    return date("d/m/Y", strtotime($data)); // Y maiúsculo sairá com 4 dígitos.
+
 } // fim formataData
 
 

@@ -39,9 +39,9 @@ if(isset($_POST['inserir'])){
         </div>
 
         <div class="form-group">
-          <label for="resumo">Resumo (máximo de 300 caracteres):</label>
+          <label for="resumo">Resumo (máximo de 500 caracteres):</label>
           <span id="maximo" class="badge badge-danger">0</span>
-          <textarea class="form-control" required name="resumo" id="resumo" cols="50" rows="3" maxlength="300"></textarea> 
+          <textarea class="form-control" required name="resumo" id="resumo" cols="50" rows="3" maxlength="500"></textarea> 
         </div>
                 
         <div class="form-group">

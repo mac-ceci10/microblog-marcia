@@ -108,7 +108,7 @@ function upload(array $arquivo){
 /* Usada em posts.php e páginas da área pública */
 function formataData(string $data): string { 
     //Pegamos a data informada, transformamos em um texto, e aplicamos em um formato mais legível brasileiro.
-    return date("d/m/Y", strtotime($data)); // Y maiúsculo sairá com 4 dígitos.
+    return date("d/m/Y H:i", strtotime($data)); // Y maiúsculo sairá com 4 dígitos.
 
 } // fim formataData
 

@@ -33,10 +33,13 @@ $quantidade = count($posts);
         </thead>
       
         <tbody>
+          <!-- Colocamos a função formata data aqui para mostrar mais legível
+        primeiro a função dentro do PHP e depois a variável data vindo do banco de dados -->
 <?php foreach($posts as $post) { ?>
           <tr>
             <td> <?=$post['titulo']?> </td>
-            <td> <?=$post['data']?> </td>
+            
+            <td> <?=formatadata($post['data'])?> </td>
             
             <?php if($tipoUsuarioLogado == 'admin'){ ?>
             <td> <?=$post['autor']?> </td>

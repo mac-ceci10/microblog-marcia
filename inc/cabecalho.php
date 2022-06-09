@@ -24,6 +24,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -36,8 +37,15 @@
             </li>
           </ul>
 
+
           <form class="form-inline my-2 my-lg-0" action="search.php" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Pesquise aqui" aria-label="Search">
+
+            <!-- METÓDO GET e busca -->
+            <!-- input é um formulário do typo busca -->
+            <!-- parametro de busca - Consulta QUERY entendendo letra "q" na URL  -->
+
+
+            <input class="form-control mr-sm-2" type="search" placeholder="Pesquise aqui" aria-label="Search" name="q">
             <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">OK</button>
           </form>
 

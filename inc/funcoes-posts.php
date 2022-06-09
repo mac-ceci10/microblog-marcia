@@ -1,16 +1,12 @@
 <?php
 require "conecta.php";
 
-
-
-
-
 /* Usada em post-insere.php */
 function inserirPost(
     mysqli $conexao, string $titulo, string $texto, string $resumo, 
     string $imagem, int $idUsuarioLogado){
 
-    $sql = "INSERT INTO posts(titulo, texto, resumo, imagem, usuario_id)
+    $sql = "INSERT INTO posts (titulo, texto, resumo, imagem, usuario_id)
             VALUES('$titulo', '$texto', '$resumo', '$imagem', $idUsuarioLogado)";
     
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
@@ -102,52 +98,6 @@ mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim atualizarPost
 
 
-// function atualizarPost(mysqli $conexao, 
-
-
-//             int $idPost, 
-//             int $idUsuarioLogado, 
-//             string $tipoUsuarioLogado,
-//             string $titulo, 
-//             string $texto, 
-//             string $resumo,
-
-//             string $imagem) {
-
-
-//                 if( $tipoUsuarioLogado == 'admin') {
-
-//                 $sql = "UPDATE posts SET 
-                
-//                             titulo = '$titulo',    
-//                             texto = '$texto',
-//                             resumo = '$resumo',
-//                             imagem = '$imagem',
-
-//                         WHERE id = $idPost";
-
-
-//                 }else{
-
-
-//                 $sql = "UPDATE posts SET 
-                
-//                             titulo = '$titulo',    
-//                             texto = '$texto',
-//                             resumo = '$resumo',
-//                             imagem = '$imagem',
-                
-//                         WHERE id = $idPost
-//                         AND usuario_id = $idUsuarioLogado";
-
-
-//                 }
-
-//     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
-// }// fim atualizarPo
-
-
-
 
 /* Usada em post-exclui.php */
 
@@ -224,11 +174,13 @@ function formataData(string $data): string {
 
 /* Usada em index.php */
 function lerTodosOsPosts(mysqli $conexao):array {
-    $sql = "";
+
+    $sql = "SELECT id, titulo, imagem, resumo FROM posts ORDER BY data DESC";
     
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     $posts = [];
     while( $post = mysqli_fetch_assoc($resultado) ){
+
         array_push($posts, $post);
     }
     return $posts; 
@@ -239,10 +191,20 @@ function lerTodosOsPosts(mysqli $conexao):array {
 
 
 /* Usada em post-detalhe.php */
-function lerDetalhes(mysqli $conexao):array {    
-    $sql = "";
+function lerDetalhes(mysqli $conexao, int $idPost):array {    
+
+    $sql = "SELECT posts.id, posts.titulo, posts.imagem, posts.data, posts.texto, usuarios.nome 
+    
+    AS autor 
+
+    FROM posts
+
+    INNER JOIN usuarios ON posts.usuario_id = usuarios.id
+
+    WHERE posts.id = $idPost";
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
     return mysqli_fetch_assoc($resultado); 
 } // fim lerDetalhes
 
@@ -251,13 +213,18 @@ function lerDetalhes(mysqli $conexao):array {
 
 
 /* Usada em search.php */
-function busca($conexao):array {
-    $sql = "";
+
+function busca( mysqli $conexao, string $termo):array {
+    $sql = "SELECT id, titulo, data, resumo FROM  posts
+    
+    WHERE titulo LIKE '%$termo%' OR resumo LIKE '%$termo%' OR texto LIKE '%$termo%' ORDER BY data DESC" ;
         
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     $posts = [];
+
     while( $post = mysqli_fetch_assoc($resultado) ){
         array_push($posts, $post);
     }
     return $posts; 
+    
 } // fim busca
